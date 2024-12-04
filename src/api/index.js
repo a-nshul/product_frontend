@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/api';
+const BASE_URL = 'https://productapi-umber.vercel.app/api';
 
 const API_URLS = {
   PRODUCTS: `${BASE_URL}/products`,
