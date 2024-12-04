@@ -106,6 +106,11 @@ const Product = () => {
 
   const columns = [
     {
+      title:'S.No',
+      key: 'index',
+      render: (text, record, index) => index + 1,
+    },
+    {
       title: 'Product Name',
       dataIndex: 'name',
       key: 'name',
