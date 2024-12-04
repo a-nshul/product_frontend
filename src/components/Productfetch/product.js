@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Table, Button, Switch, Space, Modal, Form, Select, Input, InputNumber, message } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import API_URLS from '../../api/index'; // Import the API URLs
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -21,7 +22,7 @@ const Product = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/api/products');
+      const response = await axios.get(API_URLS.PRODUCTS); // Use the API URL from the index.js
       if (response.data && response.data.products) {
         const updatedProducts = response.data.products.map(product => ({
           ...product,
@@ -42,7 +43,7 @@ const Product = () => {
 
   const handleToggle = async (value, key, productId) => {
     try {
-      await axios.patch(`http://localhost:3000/api/products/${productId}`, { [key]: value });
+      await axios.patch(API_URLS.PRODUCT_BY_ID(productId), { [key]: value });
       setProducts(prevState =>
         prevState.map(product =>
           product._id === productId ? { ...product, [key]: value } : product
@@ -62,7 +63,7 @@ const Product = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/api/products/${selectedProduct._id}`);
+      await axios.delete(API_URLS.PRODUCT_BY_ID(selectedProduct._id));
       setProducts(products.filter(p => p._id !== selectedProduct._id));
       setIsModalVisible(false);
       message.success('Product deleted successfully');
@@ -89,7 +90,7 @@ const Product = () => {
   const saveEdit = async () => {
     try {
       const values = await form.validateFields();
-      await axios.put(`http://localhost:3000/api/products/${selectedProduct._id}`, values);
+      await axios.put(API_URLS.PRODUCT_BY_ID(selectedProduct._id), values);
       setProducts(prevState =>
         prevState.map(product =>
           product._id === selectedProduct._id ? { ...product, ...values } : product

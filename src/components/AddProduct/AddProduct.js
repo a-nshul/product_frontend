@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, InputNumber, Button, message, Select } from 'antd';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import API_URLS from "../../api/index";
 const { Option } = Select;
 
 const AddProduct = () => {
@@ -15,7 +15,7 @@ const AddProduct = () => {
       setLoading(true);
 
       // Submit the form data
-      await axios.post('http://localhost:3000/api/products', values);
+      await axios.post(API_URLS.PRODUCTS, values);
       message.success('Product added successfully!');
       form.resetFields(); // Clear the form
       navigate('/'); // Navigate to the product list page
